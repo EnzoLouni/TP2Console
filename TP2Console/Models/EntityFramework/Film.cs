@@ -10,11 +10,6 @@ namespace TP2Console.Models.EntityFramework;
 [Table("film")]
 public partial class Film
 {
-    private ILazyLoader _lazyLoader;
-    public Film(ILazyLoader lazyLoader)
-    {
-        _lazyLoader = lazyLoader;
-    }
 
     [Key]
     [Column("id")]
@@ -33,13 +28,10 @@ public partial class Film
     private ICollection<Avi> avis;
 
     [InverseProperty("FilmNavigation")]
-    public virtual ICollection<Avi> Avis {
-        get
-        {
-            return _lazyLoader.Load(this, ref avis);
-        }
-        set { avis = value; }
-    }
+    public virtual ICollection<Avi> Avis
+    {
+        get; set;
+    } = new List<Avi>();
 
     [ForeignKey("Categorie")]
     [InverseProperty("Films")]

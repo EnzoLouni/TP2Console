@@ -56,7 +56,7 @@ namespace TP2Console
                      Console.WriteLine(film.Nom);
                  }
              }*/
-            /*Exo2Q1();
+            Exo2Q1();
             Exo2Q2();
             Exo2Q3();
             Exo2Q4();
@@ -64,11 +64,11 @@ namespace TP2Console
             Exo2Q6();
             Exo2Q7();
             Exo2Q8();
-            Exo2Q9();*/
-            //Exo3Q1();
-            //Exo3Q2();
-            //Exo3Q3();
-            //Exo3Q4();
+            Exo2Q9();
+            Exo3Q1();
+            Exo3Q2();
+            Exo3Q3();
+            Exo3Q4();
             Exo3Q5();
             Console.ReadKey();
         }
@@ -224,14 +224,24 @@ namespace TP2Console
         {
             var ctx = new FilmsDbContext();
 
-            ICollection<Film> filmPrefs = ctx.Films.OrderBy(f => f.Nom).Where(f => f.Categorie == ctx.Categories.First(c => c.Nom.ToLower() == "action").Id).Take(2).ToArray();
-
-            foreach(Film filmPref in filmPrefs)
+            ICollection<Film> filmPrefs = new Film[]
             {
-                filmPref.Categorie = ctx.Categories.Where(c => c.Nom.ToLower() == "drame").First().Id;
-            }
+                new Film
+                {
+                    Nom = "Film1",
+                    Description = "Description1",
+                    Categorie = ctx.Categories.First(c =>  c.Nom.ToLower() == "drame").Id,
+                    CategorieNavigation = ctx.Categories.First(c =>  c.Nom.ToLower() == "drame")
+                },
+                new Film
+                {
+                    Nom = "Film2",
+                    Description = "Description2",
+                    Categorie = ctx.Categories.First(c =>  c.Nom.ToLower() == "drame").Id,
+                    CategorieNavigation = ctx.Categories.First(c =>  c.Nom.ToLower() == "drame")
+                }
+            };
 
-            
             ctx.Films.AddRange(filmPrefs);
 
             ctx.SaveChanges();
